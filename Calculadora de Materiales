@@ -1,0 +1,327 @@
+/// Vamos a programar una calculadora de materiales para construir
+/// Primero leeremos todo el ejercicio y luego dividiremos tareas en el equipo.
+/// El algoritmo principal sólo debe llamar al subPrograma menu()
+/// Cada subPrograma puede descomponerse, si hiciera falta, en otros subProgramas a creatividad
+/// del programador
+/// El menú debe quedar de la siguiente manera:
+/// 1. Calcular muro de ladrillo
+/// 2. Calcular viga de hormigón
+/// 3. Calcular columnas de hormigón
+/// 4. Calcular contrapisos
+/// 5. Calcular techo
+/// 6. Calcular pisos
+/// 7. Calcular pintura
+/// 8. Calcular iluminación
+/// 9. Salir
+/// subprogramas calcularSuperficie y calcularVolumen
+/// Haremos ambos para usarlos dentro de los otros subprogramas. El usuario no puede acceder a
+/// ellos.
+/// subprograma calcularMuro
+/// Nos debe pedir primero si el muro será de 20 o 30 cm de espesor. Luego el largo y el alto. A partir
+/// de estos datos se debe mostrar al usuario la superficie del muro y la cantidad de materiales que
+/// necesitaremos para construirlo.
+/// Si el muro es de 30cm necesitaremos por metro cuadrado: 15.2 kg de cemento, 0.115 m3 de arena
+/// y 120 ladrillos.
+/// Si el muro es de 20cm necesitaremos por metro cuadrado: 10.9 kg de cemento, 0.09 m3 de arena
+/// y 90 ladrillos.
+/// subprograma calcularViga
+/// Nos debe pedir el largo de la viga. Por metro lineal de viga se necesitarán: 9 kg de cemento, 0.02
+/// m3 de arena, 0.02 m2 de piedra, 4 m de hierro del 8 y 3 m de hierro del 4.
+/// Debemos mostrar al usuario la cantidad de materiales necesaria.
+/// subprograma calcularColumna
+/// Nos debe pedir el largo de la columna. Por metro lineal de columna se necesitarán: 7.5 kg de
+/// cemento, 0.016 m3 de arena, 0.016 m2 de piedra, 6 m de hierro del 10 y 3 m de hierro del 4.
+/// Debemos mostrar al usuario la cantidad de materiales necesaria.
+/// subprograma calcularContrapisos
+/// Nos debe pedir espesor, ancho y largo del contrapiso a calcular.
+/// Por metro cúbico de contrapiso se necesita: 105 kg de cemento, 0.45 m3 de arena y 0.9 m3 de
+/// piedra.
+/// Debemos mostrar al usuario la cantidad de materiales necesaria.
+/// subprograma calcularTecho
+/// Nos debe pedir espesor, ancho y largo del techo a calcular.
+/// Por metro cuadrado de techo se necesita: 33 kg de cemento, 0.072 m3 de arena, 0.072 m3 de
+/// piedra, 7 m de hierro del 8 y 4 m de hierro del 6
+/// Debemos mostrar al usuario la cantidad de materiales necesaria.
+/// subprograma calcularPisos
+/// Nos debe pedir ancho y largo del paño de piso a colocar. Teniendo esos datos se debe calcular la
+/// superficie y añadirle un 10% extra por recortes
+/// Mostrar el resultado en m2
+/// subprograma calcularPintura
+/// Nos debe pedir la superficie del muro y mostrar cuánta pintura necesitamos teniendo en cuenta
+/// que rinde 6 m2 por litro de pintura.
+/// subprograma calcularIluminacion
+/// Nos debe pedir la superficie de la habitación. La iluminación la calculamos de la siguiente forma:
+/// superficie * 0.20. Eso nos da la cantidad mínima de superficie de iluminación natural (ventanas y
+/// puertas de vidrio). Mostrar resultado
+
+SubProceso subMenu()
+	Definir contador Como Cadena
+	
+	Escribir "Desea seguir calculando? Escriba S para si, N para no.";
+	Leer contador;
+	contador = Mayusculas(contador)
+	
+	Si contador == "S" Entonces
+		menu()
+	SiNo
+		Escribir "Gracias por utilizar nuestra calculadora de materiales.";
+	FinSi
+FinSubProceso
+
+//	Nos debe pedir primero si el muro será de 20 o 30 cm de espesor. Luego el largo y el alto. A
+// partir de estos datos se debe mostrar al usuario la superficie del muro y la cantidad de
+// materiales que necesitaremos para construirlo.
+
+SubProceso calcularMuro()
+	Definir muro, alto, largo, superficie, cemento, arena, ladrillos Como Real
+	
+	Escribir "CALCULADORA DE MURO. Ingrese las opciones de espesor: 20 cm (Opción 1) o 30 cm (Opción 2): ";
+	Leer muro;
+	
+	Escribir "Ingrese el largo en metros del muro:";
+	Leer largo;
+	Escribir "Ingrese el alto en metros del muro:";
+	Leer alto; 
+	
+	superficie = calcularSuperficie(alto, largo)
+	
+// Si el muro es de 30cm necesitaremos por metro cuadrado: 15.2 kg de cemento, 0.115 m3 de arena
+// y 120 ladrillos.
+// Si el muro es de 20cm necesitaremos por metro cuadrado: 10.9 kg de cemento, 0.09 m3 de arena
+// y 90 ladrillos.
+	
+	Si muro == 1 Entonces
+		cemento = 10.9 * superficie;
+		arena = 0.09 * superficie;
+		ladrillos = 90 * superficie;
+	SiNo
+		Si muro == 2 Entonces
+			cemento = 15.2 * superficie;
+			arena = 0.115 * superficie;
+			ladrillos = 120 * superficie;
+		SiNo
+			Escribir "Ingrese una opción válida para el espesor del muro:";
+		Fin Si
+	Fin Si
+	
+	Escribir "La superficie del muro será igual a: ", superficie, " m2";
+	Escribir "La cantidad de cemento que se necesita es de: ", cemento, " Kg";
+	Escribir "La cantidad de arena que se necesita es de: ", arena, " m3";
+	Escribir "La cantidad de ladrillos que se necesitan es: ", ladrillos;
+	subMenu()
+FinSubProceso
+
+// Nos debe pedir el largo de la viga. Por metro lineal de viga se necesitarán: 9 kg de cemento, 0.02
+// m3 de arena, 0.02 m2 de piedra, 4 m de hierro del 8 y 3 m de hierro del 4.
+
+SubProceso calcularViga()
+	Definir largo, cemento, arena, piedra, hierroDel8, hierroDel4 Como Real
+	
+	Escribir "CALCULADORA DE VIGA. Ingrese el largo de la viga: ";
+	Leer largo;
+	
+	cemento = largo * 9
+	arena = largo * 0.02
+	piedra = largo * 0.02
+	hierroDel8 = largo * 4
+	hierroDel4 = largo * 3
+	
+	Escribir "La cantidad de materiales que se necesitan es: ";
+	Escribir "Cemento: ", cemento, " kg";
+	Escribir "Arena: ", arena, " m3";
+	Escribir "Piedra: ", piedra, " m2";
+	Escribir "Hierro8: ", hierroDel8, " m";
+	Escribir "Hierro4: ",hierroDel4, " m";	
+	subMenu()
+FinSubProceso
+
+// Nos debe pedir el largo de la columna. Por metro lineal de columna se necesitarán: 7.5 kg de
+// cemento, 0.016 m3 de arena, 0.016 m2 de piedra, 6 m de hierro del 10 y 3 m de hierro del 4.
+
+SubProceso calcularColumna()
+	Definir largoColumna, cemento, arena, piedra, hierroDel10, hierro_del_4 Como Real	
+	
+	Escribir "CALCULADORA DE COLUMNA, Ingrese el largo de la columna en metros: ";
+	Leer largoColumna;
+	
+	cemento = 7.5
+	arena = 0.016
+	piedra = 0.016
+	hierroDel10 = 6
+	hierro_del_4 = 3	
+	
+	Escribir "La cantidad total de materiales que se necesitan tomando en cuenta el largo de la columna (", largoColumna, "m) son: ";
+	Escribir "1. ", cemento * largoColumna, " Kg. de cemento, ";
+	Escribir "2. ", arena * largoColumna, " m3 de arena, ";
+	Escribir "3. ", piedra * largoColumna, " m2 de piedra, ";
+	Escribir "4. ", hierroDel10 * largoColumna, " m de hierro del 10 y ";
+	Escribir "5. ", hierro_del_4 * largoColumna, " m de hierro del 4.";
+	subMenu()
+FinSubProceso
+
+// Nos debe pedir espesor, ancho y largo del contrapiso a calcular.
+// Por metro cúbico de contrapiso se necesita: 105 kg de cemento, 0.45 m3 de arena y 0.9 m3 de
+// piedra.
+
+SubProceso calcularContrapisos()
+	Definir altoContrapiso, anchoContrapiso, largoContrapiso, volumenContrapiso, cemento, arena, piedra Como Real
+	
+	Escribir "CALCULADORA DE CONTRAPISOS, Ingrese el ALTO, LARGO y ANCHO del contrapisos en metros: ";
+	Leer altoContrapiso, largoContrapiso, anchoContrapiso;
+	
+	
+	volumenContrapiso = calcularVolumen(altoContrapiso, largoContrapiso, anchoContrapiso)
+	
+	cemento = 105
+	arena = 0.45
+	piedra = 0.9
+	
+	Escribir "La cantidad total de materiales que se necesitan según el volumen del contrapiso (", volumenContrapiso, "m3) son: "
+	Escribir "1. ", cemento * volumenContrapiso, " Kg. de cemento, ";
+	Escribir "2. ", arena * volumenContrapiso, " m3 de arena, ";
+	Escribir "3. ", piedra * volumenContrapiso, " m2 de piedra, ";
+	subMenu()
+FinSubProceso
+
+// Nos debe pedir espesor, ancho y largo del techo a calcular.
+// Por metro cuadrado de techo se necesita: 33 kg de cemento, 0.072 m3 de arena, 0.072 m3 de
+// piedra, 7 m de hierro del 8 y 4 m de hierro del 6
+
+SubProceso calcularTecho()
+	Definir espesor, ancho, largo Como Real
+	Definir cemento, arena, piedra, hierroDel8, hierroDel4, totalMetroCuadrado Como Real
+	Definir totalCemento, totalArena, totalPiedra, totalHierroDel8, TotalHierroDel4 Como Real
+	
+	Escribir "CALCULADORA DE TECHO. Ingrese el ancho del techo: ";
+	Leer ancho;
+	Escribir "Ingrese el largo del techo: ";
+	Leer largo;
+	
+	cemento = 33
+	arena = 0.072
+	piedra = 0.072
+	hierroDel8 = 7
+	hierroDel4 = 4
+	
+	totalMetroCuadrado = calcularSuperficie(ancho, largo)
+	
+	totalCemento = totalMetroCuadrado * cemento
+	totalArena = totalMetroCuadrado * arena
+	totalPiedra = totalMetroCuadrado * piedra
+	totalHierroDel8 = totalMetroCuadrado * hierroDel8
+	totalHierroDel4 = totalMetroCuadrado * hierroDel4
+	
+	Escribir "La cantidad de materiales que se necesitan es: ";
+	Escribir "La cantidad de Cemento es: ", totalCemento, " kg";
+	Escribir "La cantidad de Arena es: ", totalArena, " m3";
+	Escribir "La cantidad de Piedra es: ", totalPiedra, " m3";
+	Escribir "La cantidad de Hierro 8 es: ", totalHierroDel8, " m";
+	Escribir "La cantidad de Hierro 4 es: ", totalHierroDel4, " m";
+	subMenu()
+FinSubProceso
+
+// Nos debe pedir ancho y largo del paño de piso a colocar. Teniendo esos datos se debe calcular la
+// superficie y añadirle un 10% extra por recortes
+// Mostrar el resultado en m2
+
+SubProceso calcularPisos()
+	Definir ancho, largo Como Real
+	Definir superficie, totalSuperficie Como Real
+	
+	Escribir "CALCULADORA DE PISOS. Ingrese el ancho del piso:";
+	Leer ancho;
+	Escribir "Ingrese el largo del piso:";
+	Leer largo;
+	
+	superficie = calcularSuperficie(ancho, largo)
+	totalSuperficie = superficie + ((superficie * 10) / 100)
+	
+	Escribir "El total de pisos es: ", totalSuperficie, "m2 (incluído el 10% extra por recortes)";
+	subMenu()
+FinSubProceso
+
+// Nos debe pedir la superficie del muro y mostrar cuánta pintura necesitamos teniendo en cuenta
+// que rinde 6 m2 por litro de pintura.
+
+SubProceso calcularPintura()
+	Definir superficie, pintura Como Real
+	
+	Escribir "CALCULADORA DE PINTURA. Ingrese la superficie del muro:";
+	Leer superficie; 
+	pintura = superficie / 6
+	
+	Escribir "Se necesitan " pintura " litros de pintura por m2.";
+	subMenu()
+FinSubProceso
+
+// Nos debe pedir la superficie de la habitación. La iluminación la calculamos de la siguiente forma:
+// superficie * 0.20. Eso nos da la cantidad mínima de superficie de iluminación natural (ventanas y
+// puertas de vidrio). Mostrar resultado
+
+SubProceso calcularIluminacion()
+	Definir superficie, iluminacion Como Real
+	
+	Escribir "CALCULADORA DE ILUMINACIÓN. Ingrese la superficie del muro: ";
+	Leer superficie; 
+	iluminacion = superficie * 0.20 
+	
+	Escribir "Se necesitan " iluminacion " m2 de iluminación natural.";
+	subMenu()
+FinSubProceso
+
+Funcion superficie = calcularSuperficie(alto, ancho)
+	Definir superficie Como Real	
+	superficie = alto * ancho
+FinFuncion
+
+Funcion volumen = calcularVolumen(alto, largo, ancho)
+	Definir volumen Como Real
+	volumen = alto * largo * ancho
+FinFuncion
+
+SubProceso menu()	
+	Definir calculadora Como Entero
+	
+	Escribir "Bienvenido, ingrese el número de la operación que desea realizar por favor:";
+	Escribir "****************************************************************************" ;
+	Escribir "1. Calcular muro de ladrillo";
+	Escribir "2. Calcular viga de hormigón";
+	Escribir "3. Calcular columnas de hormigón";
+	Escribir "4. Calcular contrapisos";
+	Escribir "5. Calcular techo";
+	Escribir "6. Calcular pisos";
+	Escribir "7. Calcular pintura";
+	Escribir "8. Calcular iluminación";
+	Escribir "9. Salir";
+	Escribir "******************************************************************************" ;
+	Leer calculadora;
+	
+	Segun calculadora Hacer
+		1:
+			calcularMuro()
+		2:
+			calcularViga()
+		3:
+			calcularColumna()
+		4:
+			calcularContrapisos()
+		5:
+			calcularTecho()
+		6:
+			calcularPisos()
+		7:
+			calcularPintura()
+		8:
+			calcularIluminacion()
+		9:
+			Escribir "Gracias por usar nuestra calculadora de materiales.";
+		De Otro Modo:
+			Escribir "No ha ingresado una opción válida. Intente nuevamente.";
+			menu()
+	Fin Segun
+		
+FinSubProceso
+
+Algoritmo calculadora_de_Materiales
+	menu()
+FinAlgoritmo
